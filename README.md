@@ -8,20 +8,21 @@ A full rebuild of [ckcustomwalldesign.com](https://www.ckcustomwalldesign.com/) 
 
 ```
 ckcustom/
-├── competitive-analysis.html      ← Client-facing PDF-ready report
+├── netlify.toml                   ← Publish-dir pinned to site/
 ├── research/
 │   ├── 01-client-brand.md         ← Brand extraction from existing site
 │   ├── 02-competitor-analysis.md  ← Top 5 competitors scored + patterns
 │   ├── 03-build-brief.md          ← Master design direction + architecture
 │   └── 04-quality-audit.md        ← Launch checklist + known items
-├── site/                          ← The website
+├── site/                          ← The website (Netlify publish dir)
 │   ├── index.html                 ← Home
 │   ├── about.html                 ← Founder story
-│   ├── portfolio.html             ← Project gallery
+│   ├── portfolio.html             ← Project gallery with lightbox
 │   ├── services.html              ← Technique catalog
-│   ├── courses.html               ← Workshops + training
+│   ├── courses.html               ← Redirects to clinton-lindo.mykajabi.com
 │   ├── contact.html               ← Book consultation
 │   ├── 404.html
+│   ├── competitive-analysis.html  ← Client-facing PDF-ready report (noindex)
 │   ├── css/styles.css             ← Single stylesheet (~480 lines, tokenized)
 │   ├── js/main.js                 ← GSAP scroll choreography
 │   ├── assets/
@@ -75,20 +76,24 @@ Or any static server — `npx serve site`, Live Server in VS Code, etc.
 
 ## Deployment
 
-### Vercel (recommended)
+### Netlify (recommended — already configured)
+
+`netlify.toml` pins the publish dir to `site/`. Just connect the repo in the Netlify UI or:
+
+```bash
+netlify deploy --prod
+```
+
+The competitive analysis report is available at `/competitive-analysis.html` on the deployed site.
+
+### Vercel
 
 ```bash
 cd ckcustom
 vercel --prod
 ```
 
-When prompted, set the project root to `site/`. No framework preset needed — it's static HTML.
-
-### Netlify
-
-```bash
-netlify deploy --prod --dir=site
-```
+When prompted, set the output directory to `site/`.
 
 ### Any static host
 
