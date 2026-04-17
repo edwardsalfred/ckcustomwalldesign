@@ -23,6 +23,11 @@ build/
 .playwright-mcp/
 mobile-*.png
 mobile-*.jpg
+footer-*.png
+footer-*.jpg
+
+# Source artifacts (served from site/assets/)
+ck_custom_wall_nav_logo.png
 
 # Env
 .env
