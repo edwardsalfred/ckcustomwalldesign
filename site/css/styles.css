@@ -95,7 +95,8 @@ section{padding-top:var(--section-y);padding-bottom:var(--section-y);position:re
 }
 .nav.scrolled{background:rgba(246,241,234,.92);border-bottom-color:var(--rule);padding-top:14px;padding-bottom:14px}
 .nav-logo{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-size:22px;letter-spacing:-.02em}
-.nav-logo img{height:56px;width:auto;display:block;transition:transform .3s var(--ease-out)}
+.nav-logo img{height:84px;width:auto;display:block;transition:transform .3s var(--ease-out)}
+.nav.scrolled .nav-logo img{height:72px;transition:height .35s ease, transform .3s var(--ease-out)}
 .nav-logo:hover img{transform:scale(1.03)}
 .nav-logo .mark{
   width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--gold);
@@ -553,8 +554,9 @@ body.lightbox-open{overflow:hidden}
   .nav.scrolled{padding-top:12px;padding-bottom:12px}
   .nav-logo{font-size:18px;gap:10px}
   .nav-logo .mark{width:32px;height:32px;font-size:14px}
-  .nav-logo img{height:44px}
-  .footer-brand img{height:72px}
+  .nav-logo img{height:60px}
+  .nav.scrolled .nav-logo img{height:52px}
+  .footer-brand img{height:80px}
   .nav-links{
     position:fixed;top:0;left:0;right:0;
     flex-direction:column;align-items:stretch;justify-content:flex-start;
