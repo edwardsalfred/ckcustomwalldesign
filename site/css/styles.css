@@ -461,25 +461,195 @@ form.contact button[type=submit]{width:100%;margin-top:8px}
   .portfolio-grid{grid-template-columns:repeat(6, 1fr)}
   .p-tile.tall,.p-tile.wide,.p-tile.square,.p-tile.span5,.p-tile.span6,.p-tile.span7{grid-column:span 3}
   .hero{grid-template-columns:1fr;padding-top:140px;padding-bottom:80px}
-  .hero-asset{display:none}
+  .hero-asset{display:block;justify-self:stretch;max-width:100%;aspect-ratio:4/3;order:2;margin-top:40px}
+  .hero-inner{order:1}
   .hero-mark{top:100px}
   .about-values{grid-template-columns:1fr;gap:16px}
 }
+
+/* Tablet / small laptop */
+@media (max-width:960px){
+  .press-inner{gap:24px}
+  .press-logos{gap:32px;row-gap:20px}
+  .press-logos span{font-size:18px}
+  .press-logos span.placeholder{font-size:10px}
+  .courses-hero{padding:160px var(--gutter) 80px}
+  .founders-quote{font-size:22px;padding:22px 0 22px 22px}
+  :root{--section-y:clamp(64px, 10vw, 140px)}
+}
+
+/* Phone */
 @media (max-width:720px){
-  .nav-links{display:none}
-  .nav-toggle{display:flex}
-  .hero{padding-top:120px}
-  .hero h1{font-size:clamp(52px, 14vw, 82px)}
-  .section-head{flex-direction:column;align-items:flex-start;gap:16px}
-  .services-grid{grid-template-columns:1fr}
-  .pricing-grid{grid-template-columns:1fr}
-  .tech-row{grid-template-columns:50px 1fr;gap:16px}
-  .tech-row p, .tech-row .arrow{display:none}
-  .footer-grid{grid-template-columns:1fr;gap:32px}
-  .footer-bottom{flex-direction:column;text-align:center}
-  .portfolio-grid{grid-template-columns:1fr}
-  .p-tile.tall,.p-tile.wide,.p-tile.square,.p-tile.span5,.p-tile.span6,.p-tile.span7{grid-column:span 1}
-  form.contact{padding:28px}
+  :root{--gutter:20px;--section-y:64px;--maxw:100%}
+  body{font-size:15px}
+
+  /* --- Mobile nav drawer --- */
+  .nav{padding:16px var(--gutter)}
+  .nav.scrolled{padding-top:12px;padding-bottom:12px}
+  .nav-logo{font-size:18px;gap:10px}
+  .nav-logo .mark{width:32px;height:32px;font-size:14px}
+  .nav-links{
+    position:fixed;top:0;left:0;right:0;
+    flex-direction:column;align-items:stretch;justify-content:flex-start;
+    padding:96px 24px 40px;gap:4px;
+    background:var(--paper);
+    border-bottom:1px solid var(--rule);
+    box-shadow:var(--shadow-lg);
+    transform:translateY(-102%);transition:transform .45s var(--ease-out);
+    z-index:999;overflow-y:auto;max-height:100vh;
+  }
+  .nav-links.open{transform:translateY(0)}
+  .nav-links a:not(.btn){
+    font-family:var(--serif);font-size:28px;letter-spacing:-.01em;
+    padding:14px 0;border-bottom:1px solid var(--rule);color:var(--ink);
+  }
+  .nav-links a:not(.btn)::after{display:none}
+  .nav-links a.btn{
+    margin-top:24px;padding:18px 26px !important;font-size:13px !important;
+    width:100%;justify-content:center;
+  }
+  .nav-toggle{display:flex;position:relative;z-index:1001}
+  .nav-toggle[aria-expanded="true"] span{background:transparent}
+  .nav-toggle[aria-expanded="true"] span::before{top:0;transform:rotate(45deg)}
+  .nav-toggle[aria-expanded="true"] span::after{top:0;transform:rotate(-45deg)}
+  body.menu-open{overflow:hidden}
+
+  /* --- Hero --- */
+  .hero{padding-top:110px;padding-bottom:60px;min-height:auto}
+  .hero h1{font-size:clamp(48px, 13vw, 76px);margin-bottom:24px}
+  .hero-sub{font-size:17px;margin-bottom:32px}
+  .hero-actions{gap:14px}
+  .hero-actions .btn{flex:1 1 auto;justify-content:center;min-width:0}
+  .hero-asset{margin-top:32px;aspect-ratio:1/1;border-radius:3px}
+  .hero-asset .badge{font-size:9px;padding:6px 10px}
+  .hero-scroll-hint{display:none}
+  .hero-mark{top:88px;font-size:10px}
+
+  /* --- Sections & heads --- */
+  .section-head{flex-direction:column;align-items:flex-start;gap:18px;margin-bottom:40px}
+  .section-head-right{max-width:100% !important}
+  h1{font-size:clamp(44px, 12vw, 72px)}
+  h2{font-size:clamp(32px, 9vw, 48px)}
+  h3{font-size:clamp(22px, 5.5vw, 30px)}
+
+  /* --- Trust --- */
+  .trust{padding:36px var(--gutter)}
+  .trust-grid{grid-template-columns:1fr 1fr;gap:24px}
+  .trust-item .value{font-size:18px}
+  .trust-item .value small{font-size:11px}
+
+  /* --- Services grid --- */
+  .services-grid{grid-template-columns:1fr;gap:1px}
+  .service-card{min-height:200px;padding:28px 22px;gap:16px}
+  .service-card h3{font-size:24px}
+
+  /* --- Method (dark) --- */
+  .method-step{padding-top:20px}
+  .method-step h3{font-size:32px}
+  .method-step .index{font-size:72px;top:-24px}
+
+  /* --- Portfolio --- */
+  .portfolio-grid{grid-template-columns:1fr;gap:12px;margin-top:24px}
+  .p-tile,
+  .p-tile.tall,.p-tile.wide,.p-tile.square,
+  .p-tile.span5,.p-tile.span6,.p-tile.span7{grid-column:span 1 !important;aspect-ratio:4/5}
+  .p-tile .caption{opacity:1;transform:none;font-size:12px}
+  .p-tile .caption strong{font-size:20px}
+  .p-tile::after{opacity:.65}
+
+  /* --- Founders --- */
+  .founders-grid{gap:40px}
+  .founders-quote{font-size:20px;padding:20px 0 20px 20px;margin:24px 0}
+  .founders-copy .lede{font-size:19px}
+
+  /* --- Pricing --- */
+  .pricing-grid{grid-template-columns:1fr;gap:12px}
+  .price-card{padding:26px 22px}
+  .price-card .amount{font-size:40px}
+
+  /* --- Quote --- */
+  .quote q{font-size:clamp(24px, 6.5vw, 32px);line-height:1.35}
+  .quote .attr{margin-top:24px;font-size:11px}
+
+  /* --- Press --- */
+  .press{padding:36px var(--gutter)}
+  .press-inner{flex-direction:column;align-items:flex-start;gap:20px}
+  .press-logos{gap:24px;row-gap:16px}
+  .press-logos span{font-size:16px}
+
+  /* --- Final CTA --- */
+  .final-cta{padding:80px var(--gutter)}
+  .final-cta h2{font-size:clamp(40px, 11vw, 64px)}
+  .final-cta p{font-size:17px;margin-bottom:32px}
+
+  /* --- Page header --- */
+  .page-header{padding:140px var(--gutter) 56px}
+  .page-header h1{font-size:clamp(44px, 12vw, 72px)}
+  .page-header .lede{font-size:17px}
+
+  /* --- About --- */
+  .about-copy p{font-size:16px}
+  .about-copy p:first-of-type::first-letter{font-size:64px;margin:2px 10px 0 -2px}
+  .about-values{gap:12px}
+  .about-values .val{padding-top:18px}
+
+  /* --- Technique rows --- */
+  .tech-row{grid-template-columns:40px 1fr;gap:14px;padding:22px 0}
+  .tech-row:hover{padding-left:0}
+  .tech-row p,.tech-row .arrow{display:none}
+  .tech-row h3{font-size:24px}
+
+  /* --- Courses --- */
+  .courses-hero{padding:130px var(--gutter) 64px}
+  .courses-hero h1{font-size:clamp(44px, 12vw, 68px)}
+  .course{padding:48px 0;gap:28px}
+  .course h3{font-size:32px;margin-bottom:14px}
+  .course .meta{flex-wrap:wrap;gap:12px;margin-bottom:16px}
+  .course .cover::after{font-size:22px;padding:16px;text-align:center}
+
+  /* --- Contact --- */
+  .contact-grid{gap:32px}
+  .contact-info .info-row{grid-template-columns:100px 1fr;gap:16px;padding:20px 0}
+  .contact-info .info-row .v{font-size:18px}
+  form.contact{padding:24px 20px;border-radius:3px}
+  .field input,.field textarea,.field select{font-size:16px} /* prevent iOS zoom */
+
+  /* --- Footer --- */
+  .footer-grid{grid-template-columns:1fr;gap:32px;padding-bottom:32px}
+  .footer-bottom{flex-direction:column;text-align:center;gap:10px;font-size:11px}
+  .footer-brand .mark{font-size:28px}
+  footer{padding:56px var(--gutter) 24px}
+
+  /* --- Buttons on mobile --- */
+  .btn{padding:14px 24px;font-size:12px}
+
+  /* --- Error page --- */
+  .error-page h1{font-size:clamp(96px, 40vw, 200px)}
+}
+
+/* Extra small phones */
+@media (max-width:400px){
+  :root{--gutter:16px}
+  .trust-grid{grid-template-columns:1fr}
+  .hero h1{font-size:44px}
+  h2{font-size:32px}
+  .service-card{padding:24px 18px}
+  .price-card{padding:22px 18px}
+  .nav-links a:not(.btn){font-size:24px;padding:12px 0}
+}
+
+/* Touch-first hover neutering */
+@media (hover:none){
+  .p-tile:hover img{transform:none}
+  .p-tile:hover::after{opacity:.65}
+  .p-tile .caption{opacity:1;transform:none}
+  .service-card:hover{background:var(--card);color:var(--ink)}
+  .service-card:hover h3{color:var(--ink)}
+  .service-card:hover p{color:var(--muted)}
+  .service-card:hover .arrow{background:transparent;border-color:var(--rule);transform:none}
+  .tech-row:hover{padding-left:0;background:transparent}
+  .tech-row:hover h3{color:var(--ink)}
+  .founders-portrait:hover img{transform:none}
 }
 
 /* ========== Reduced motion ========== */

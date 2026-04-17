@@ -22,10 +22,24 @@
   /* ---------- Mobile menu toggle ---------- */
   const toggle = document.querySelector(".nav-toggle");
   const links = document.querySelector(".nav-links");
+  const setMenu = open => {
+    if (!links || !toggle) return;
+    links.classList.toggle("open", open);
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    document.body.classList.toggle("menu-open", open);
+  };
   if (toggle && links) {
     toggle.addEventListener("click", () => {
-      const open = links.classList.toggle("open");
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      setMenu(!links.classList.contains("open"));
+    });
+    links.querySelectorAll("a").forEach(a => {
+      a.addEventListener("click", () => setMenu(false));
+    });
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && links.classList.contains("open")) setMenu(false);
+    });
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 720 && links.classList.contains("open")) setMenu(false);
     });
   }
 
@@ -248,16 +262,19 @@
     });
   }
 
-  /* ---------- Magnetic CTA (very light) ---------- */
-  document.querySelectorAll(".btn").forEach(btn => {
-    btn.addEventListener("mousemove", e => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      gsap.to(btn, { x: x * 0.15, y: y * 0.2, duration: 0.4, ease: "power3.out" });
+  /* ---------- Magnetic CTA (desktop only) ---------- */
+  const canHover = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
+  if (canHover) {
+    document.querySelectorAll(".btn").forEach(btn => {
+      btn.addEventListener("mousemove", e => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        gsap.to(btn, { x: x * 0.15, y: y * 0.2, duration: 0.4, ease: "power3.out" });
+      });
+      btn.addEventListener("mouseleave", () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "power3.out" });
+      });
     });
-    btn.addEventListener("mouseleave", () => {
-      gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "power3.out" });
-    });
-  });
+  }
 })();
