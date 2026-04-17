@@ -48,6 +48,100 @@
     el.textContent = new Date().getFullYear();
   });
 
+  /* ---------- Lightbox ---------- */
+  const lightbox = document.getElementById("lightbox");
+  if (lightbox) {
+    const tiles = Array.from(document.querySelectorAll(".p-tile")).filter(
+      t => t.getAttribute("href") === "#"
+    );
+    const lbImg = document.getElementById("lightbox-img");
+    const lbCap = document.getElementById("lightbox-caption");
+    const lbCount = document.getElementById("lightbox-counter");
+    const btnClose = document.getElementById("lightbox-close");
+    const btnPrev = document.getElementById("lightbox-prev");
+    const btnNext = document.getElementById("lightbox-next");
+    let idx = 0;
+
+    const show = i => {
+      const tile = tiles[i];
+      if (!tile) return;
+      const img = tile.querySelector("img");
+      const cap = tile.querySelector(".caption");
+      lightbox.classList.add("loading");
+      lbImg.src = img.src;
+      lbImg.alt = img.alt || "";
+      lbImg.onload = () => lightbox.classList.remove("loading");
+      if (cap) {
+        const title = cap.querySelector("strong")?.textContent.trim();
+        const sub = cap.querySelector("span")?.textContent.trim();
+        lbCap.textContent = [title, sub].filter(Boolean).join(" · ");
+      } else {
+        lbCap.textContent = "";
+      }
+      lbCount.textContent = `${i + 1} / ${tiles.length}`;
+      idx = i;
+      // preload neighbours
+      [i - 1, i + 1].forEach(n => {
+        const t = tiles[(n + tiles.length) % tiles.length];
+        if (t) new Image().src = t.querySelector("img").src;
+      });
+    };
+
+    const open = i => {
+      show(i);
+      lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.classList.add("lightbox-open");
+      btnClose.focus();
+    };
+    const close = () => {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("lightbox-open");
+    };
+    const prev = () => show((idx - 1 + tiles.length) % tiles.length);
+    const next = () => show((idx + 1) % tiles.length);
+
+    tiles.forEach((tile, i) => {
+      tile.addEventListener("click", e => {
+        e.preventDefault();
+        open(i);
+      });
+    });
+
+    btnClose.addEventListener("click", close);
+    btnPrev.addEventListener("click", prev);
+    btnNext.addEventListener("click", next);
+    lightbox.addEventListener("click", e => {
+      if (e.target === lightbox) close();
+    });
+    document.addEventListener("keydown", e => {
+      if (!lightbox.classList.contains("open")) return;
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowLeft") prev();
+      else if (e.key === "ArrowRight") next();
+    });
+
+    // swipe nav
+    let tx = 0, ty = 0;
+    lightbox.addEventListener(
+      "touchstart",
+      e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; },
+      { passive: true }
+    );
+    lightbox.addEventListener(
+      "touchend",
+      e => {
+        const dx = e.changedTouches[0].clientX - tx;
+        const dy = e.changedTouches[0].clientY - ty;
+        if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
+          dx > 0 ? prev() : next();
+        }
+      },
+      { passive: true }
+    );
+  }
+
   /* ---------- Bail out early if GSAP missing or reduced motion ---------- */
   if (reduced || typeof window.gsap === "undefined") {
     // Show all reveal elements immediately
