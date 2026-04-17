@@ -29,6 +29,8 @@ lightbox-*.png
 lightbox-*.jpg
 logo-*.png
 logo-*.jpg
+ebook-*.png
+ebook-*.jpg
 
 # Source artifacts (served from site/assets/)
 ck_custom_wall_nav_logo.png
